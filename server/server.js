@@ -10,7 +10,7 @@ const path = require("path");
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN,
   })
 );
 
@@ -20,8 +20,8 @@ app.use(express.json());
 // production assests
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join("client/build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname,"client", "build", "index.html"));
   });
 }
 
