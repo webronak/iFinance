@@ -7,6 +7,9 @@ const {
   deleteExpense,
   updateExpense
 } = require('../controllers/expenseController');
+const userAuthMiddleware = require('../middlewares/userAuthMiddleware');
+
+router.use(userAuthMiddleware);
 
 router.get('/', getExpenses);
 

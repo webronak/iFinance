@@ -7,6 +7,9 @@ const {
   deleteIncome,
   updateIncome
 } = require('../controllers/incomeController');
+const userAuthMiddleware = require('../middlewares/userAuthMiddleware');
+
+router.use(userAuthMiddleware);
 
 router.get('/', getIncomes);
 

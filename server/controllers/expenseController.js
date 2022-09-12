@@ -2,7 +2,8 @@ const ExpenseModal = require('../models/expenseModal');
 
 // GET all Expense
 const getExpenses = async (req, res) => {
-  const allExpense = await ExpenseModal.find({});
+  const userId = req.user._id;
+  const allExpense = await ExpenseModal.find({userId});
   res.status(200).json(
     allExpense.map(
       ({ title, createdAt, updatedAt, description, amount, _id }) => ({
@@ -26,8 +27,9 @@ const getExpense = async (req, res) => {
 
 // ADD new Expense
 const addExpense = async (req, res) => {
+  const userId = req.user._id;
   try {
-    const expense = await ExpenseModal.create(req.body);
+    const expense = await ExpenseModal.create({...req.body, userId});
     res.status(200).json(expense);
   } catch {
     (err) => {

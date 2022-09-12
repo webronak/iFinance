@@ -1,3 +1,4 @@
+const { strict } = require('assert');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -12,6 +13,10 @@ const incomeSchema = new Schema({
   },
   amount:{
     type: Number,
+    required: true
+  },
+  userId:{
+    type: String,
     required: true
   }
 },{timestamps: true});

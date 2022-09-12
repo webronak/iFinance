@@ -1,12 +1,15 @@
-import React from "react";
 import { useQuery } from "react-query";
 import { QueryFnParams } from "../types";
+import headers from "../headers";
 import axios from "axios";
 
 const fetchSingleExpense = async ({ queryKey }: QueryFnParams) => {
-  const [key, id] = queryKey;
+  const [id] = queryKey;
   const { data } = await axios.get(
-    `${process.env.REACT_APP_API_URL}/expense/${id}`
+    `${process.env.REACT_APP_API_URL}/expense/${id}`,
+    {
+      headers: headers(),
+    }
   );
   return data;
 };

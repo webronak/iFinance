@@ -2,7 +2,8 @@ const IncomeModal = require('../models/incomeModal');
 
 // GET all Income
 const getIncomes = async (req, res) => {
-  const allIncome = await IncomeModal.find({});
+  const userId = req.user._id;
+  const allIncome = await IncomeModal.find({userId});
   res.status(200).json(
     allIncome.map(
       ({ title, createdAt, updatedAt, description, amount, _id }) => ({
@@ -12,6 +13,7 @@ const getIncomes = async (req, res) => {
         description,
         amount,
         id: _id,
+
       })
     )
   );
@@ -19,15 +21,17 @@ const getIncomes = async (req, res) => {
 
 // GET single income
 const getIncome = async (req, res) => {
+  const userId = req.user._id;
   const { id } = req.params;
-  const allIncome = await IncomeModal.find({ _id: id });
+  const allIncome = await IncomeModal.find({ _id: id, userId });
   res.status(200).json(allIncome[0]);
 };
 
 // ADD new income
 const addIncome = async (req, res) => {
+  const userId = req.user._id;
   try {
-    const income = await IncomeModal.create(req.body);
+    const income = await IncomeModal.create({...req.body,userId});
     res.status(200).json(income);
   } catch {
     (err) => {

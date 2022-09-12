@@ -51,9 +51,12 @@ const LoginForm = () => {
     const { showPassword, ...rest } = values;
     loginMutation(rest, {
       onSuccess: async (data) => {
-        triggerSnackbar("Logged in successfully!");
+        const { token, email } = data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("email", email);
         addUser(data);
         navigate("/dashboard/incomes", { replace: true });
+        triggerSnackbar("Logged in successfully!");
       },
     });
   };
